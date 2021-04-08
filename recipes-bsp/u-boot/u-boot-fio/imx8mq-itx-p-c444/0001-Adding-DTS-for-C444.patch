@@ -1,16 +1,29 @@
-From 0186d9652b1410beddad904b9a1ebab115a03419 Mon Sep 17 00:00:00 2001
+From fa01da5de1aab3eba44d88d4304d8d6c561f2344 Mon Sep 17 00:00:00 2001
 From: Brendan Krieger <bkrieger@winsystems.com>
 Date: Tue, 6 Apr 2021 16:38:01 +0000
 Subject: [PATCH] Adding DTS for C444
 
 ---
+ arch/arm/dts/Makefile              |   1 +
  arch/arm/dts/imx8mq-itx-p-c444.dts | 550 +++++++++++++++++++++++++++++
- 1 file changed, 550 insertions(+)
+ 2 files changed, 551 insertions(+)
  create mode 100644 arch/arm/dts/imx8mq-itx-p-c444.dts
 
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index 638fbdfd3b5..eafe03f52ac 100644
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -793,6 +793,7 @@ dtb-$(CONFIG_ARCH_IMX8M) += \
+ 	imx8mq-ddr3l-val.dtb \
+ 	imx8mq-ddr4-val.dtb \
+ 	imx8mq-evk.dtb \
++	imx8mq-itx-p-c444.dtb \
+ 	imx8mp-evk.dtb \
+ 	imx8mp-verdin.dtb \
+ 	imx8mm-ab2.dtb \
 diff --git a/arch/arm/dts/imx8mq-itx-p-c444.dts b/arch/arm/dts/imx8mq-itx-p-c444.dts
 new file mode 100644
-index 0000000000..3d8219804f
+index 00000000000..3d8219804f3
 --- /dev/null
 +++ b/arch/arm/dts/imx8mq-itx-p-c444.dts
 @@ -0,0 +1,550 @@
@@ -565,5 +578,5 @@ index 0000000000..3d8219804f
 +	};
 +};
 -- 
-2.25.1
+2.31.0
 
