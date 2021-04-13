@@ -1,4 +1,4 @@
-From 05b4842b62797b06202226ac3de361de538a2e41 Mon Sep 17 00:00:00 2001
+From be6ce22cdfb6556fbdbc3c580bcdee2db143801a Mon Sep 17 00:00:00 2001
 From: Brendan Krieger <bkrieger@winsystems.com>
 Date: Mon, 5 Apr 2021 20:34:51 +0000
 Subject: [PATCH] Adding support for C444 Memory
@@ -8,7 +8,8 @@ Subject: [PATCH] Adding support for C444 Memory
  board/freescale/imx8mq_evk/lpddr4_timing_2G.c | 2981 +++++++++++++++++
  board/freescale/imx8mq_evk/lpddr4_timing_4G.c | 1866 +++++++++++
  board/freescale/imx8mq_evk/spl.c              |   20 +-
- 4 files changed, 4863 insertions(+), 6 deletions(-)
+ include/configs/imx8mq_evk.h                  |    4 +
+ 5 files changed, 4867 insertions(+), 6 deletions(-)
  create mode 100644 board/freescale/imx8mq_evk/lpddr4_timing_2G.c
  create mode 100644 board/freescale/imx8mq_evk/lpddr4_timing_4G.c
 
@@ -4920,6 +4921,21 @@ index bb8211dd7c..848db2eaef 100644
  }
  
  #define I2C_PAD_CTRL	(PAD_CTL_DSE6 | PAD_CTL_HYS | PAD_CTL_PUE)
+diff --git a/include/configs/imx8mq_evk.h b/include/configs/imx8mq_evk.h
+index b6cd2dfead..db75aad0f6 100644
+--- a/include/configs/imx8mq_evk.h
++++ b/include/configs/imx8mq_evk.h
+@@ -171,6 +171,10 @@
+ #define PHYS_SDRAM                      0x40000000
+ #define PHYS_SDRAM_SIZE			0xC0000000 /* 3GB DDR */
+ #define CONFIG_SYS_BOOTM_LEN		SZ_64M
++#ifdef CONFIG_IMX8M_4G_LPDDR4
++#define PHYS_SDRAM_2			0x100000000
++#define PHYS_SDRAM_2_SIZE		0x40000000 /* 1GB DDR */
++#endif
+ 
+ #define CONFIG_SYS_MEMTEST_START	PHYS_SDRAM
+ #define CONFIG_SYS_MEMTEST_END		(CONFIG_SYS_MEMTEST_START + \
 -- 
 2.25.1
 
