@@ -1,0 +1,87 @@
+From 0ee15bd2f9422822af86660c84771b0e9e10054b Mon Sep 17 00:00:00 2001
+From: Brendan Krieger <bkrieger@winsystems.com>
+Date: Tue, 20 Jul 2021 13:51:14 +0000
+Subject: [PATCH] Fix for rts during RS485
+
+---
+ drivers/tty/serial/imx.c | 30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
+index 26dc1c5b3517..d8408e751656 100644
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -886,14 +886,8 @@ static irqreturn_t imx_uart_int(int irq, void *dev_id)
+ 	struct imx_port *sport = dev_id;
+ 	unsigned int usr1, usr2, ucr1, ucr2, ucr3, ucr4;
+ 	irqreturn_t ret = IRQ_NONE;
+-	unsigned long flags = 0;
+ 
+-	/*
+-	 * IRQs might not be disabled upon entering this interrupt handler,
+-	 * e.g. when interrupt handlers are forced to be threaded. To support
+-	 * this scenario as well, disable IRQs when acquiring the spinlock.
+-	 */
+-	spin_lock_irqsave(&sport->port.lock, flags);
++	spin_lock(&sport->port.lock);
+ 
+ 	usr1 = imx_uart_readl(sport, USR1);
+ 	usr2 = imx_uart_readl(sport, USR2);
+@@ -961,7 +955,7 @@ static irqreturn_t imx_uart_int(int irq, void *dev_id)
+ 		ret = IRQ_HANDLED;
+ 	}
+ 
+-	spin_unlock_irqrestore(&sport->port.lock, flags);
++	spin_unlock(&sport->port.lock);
+ 
+ 	return ret;
+ }
+@@ -1966,6 +1960,16 @@ imx_uart_console_write(struct console *co, const char *s, unsigned int count)
+ 	unsigned int ucr1;
+ 	unsigned long flags = 0;
+ 	int locked = 1;
++	int retval;
++
++	retval = clk_enable(sport->clk_per);
++	if (retval)
++		return;
++	retval = clk_enable(sport->clk_ipg);
++	if (retval) {
++		clk_disable(sport->clk_per);
++		return;
++	}
+ 
+ 	if (sport->port.sysrq)
+ 		locked = 0;
+@@ -2001,6 +2005,9 @@ imx_uart_console_write(struct console *co, const char *s, unsigned int count)
+ 
+ 	if (locked)
+ 		spin_unlock_irqrestore(&sport->port.lock, flags);
++
++	clk_disable(sport->clk_ipg);
++	clk_disable(sport->clk_per);
+ }
+ 
+ /*
+@@ -2101,14 +2108,15 @@ imx_uart_console_setup(struct console *co, char *options)
+ 
+ 	retval = uart_set_options(&sport->port, co, baud, parity, bits, flow);
+ 
++	clk_disable(sport->clk_ipg);
+ 	if (retval) {
+-		clk_disable_unprepare(sport->clk_ipg);
++		clk_unprepare(sport->clk_ipg);
+ 		goto error_console;
+ 	}
+ 
+-	retval = clk_prepare_enable(sport->clk_per);
++	retval = clk_prepare(sport->clk_per);
+ 	if (retval)
+-		clk_disable_unprepare(sport->clk_ipg);
++		clk_unprepare(sport->clk_ipg);
+ 
+ error_console:
+ 	return retval;
+-- 
+2.25.1
+

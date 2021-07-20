@@ -636,6 +636,7 @@ tpm_dev: &ecspi2 {
                 clock-frequency = <23880000>;
                 pinctrl-names = "default";
                 pinctrl-0 = <&pinctrl_csi1_pwn>;
+		enable-gpios = <&gpio3 0 GPIO_ACTIVE_HIGH>;
                 reset-gpios = <&gpio3 25 GPIO_ACTIVE_LOW>;
 		status = "disabled";
                 port {
