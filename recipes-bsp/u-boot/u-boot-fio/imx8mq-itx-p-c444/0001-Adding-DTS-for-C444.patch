@@ -18,9 +18,9 @@ index 638fbdfd3b5..eafe03f52ac 100644
  	imx8mq-ddr4-val.dtb \
  	imx8mq-evk.dtb \
 +	imx8mq-itx-p-c444.dtb \
+ 	imx8mp-ddr4-evk.dtb \
  	imx8mp-evk.dtb \
  	imx8mp-verdin.dtb \
- 	imx8mm-ab2.dtb \
 diff --git a/arch/arm/dts/imx8mq-itx-p-c444.dts b/arch/arm/dts/imx8mq-itx-p-c444.dts
 new file mode 100644
 index 00000000000..3d8219804f3
