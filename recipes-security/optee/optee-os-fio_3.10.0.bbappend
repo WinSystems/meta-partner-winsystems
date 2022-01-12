@@ -4,3 +4,8 @@
 EXTRA_OEMAKE_append_imx8mq-itx-p-c444 = " \
     CFG_DDR_SIZE=0xc0000000 \
 "
+
+# TEMP: Fix access to memory > 3G (Revert w/ move to 3.15)
+EXTRA_OEMAKE_append_imx8mq-itx-p-c444 = " \
+    CFG_CORE_DYN_SHM=n \
+"
