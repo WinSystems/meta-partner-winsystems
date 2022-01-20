@@ -34,3 +34,7 @@ CORE_IMAGE_BASE_INSTALL += " \
     packagegroup-core-full-cmdline-extended \
     ${@bb.utils.contains('LMP_DISABLE_GPLV3', '1', '', '${CORE_IMAGE_BASE_INSTALL_GPLV3}', d)} \
 "
+
+IMAGE_CMD_wic_append_imx8mq-itx-p-c444 () {
+       dd if="${DEPLOY_DIR_IMAGE}/sit-${MACHINE}.bin" seek=65 bs=512 conv=notrunc of="${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.wic"
+}

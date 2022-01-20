@@ -16,7 +16,8 @@
 #
 #   ${IMX_BOOT_SEEK} 32 or 33kiB, see reference manual
 #
-part SIT --source rawcopy --sourceparams="file=sit.bin" --ondisk mmcblk --no-table --offset 65s --fixed-size 1s
+# TODO: Fix upstream WKS parser -- for now manually add this with dd
+# part SIT --source rawcopy --sourceparams="file=sit.bin" --ondisk mmcblk --no-table --offset 65s --fixed-size 1s
 part SPL --source rawcopy --sourceparams="file=imx-boot" --ondisk mmcblk --no-table --offset ${IMX_BOOT_SEEK}
 part u-boot --source rawcopy --sourceparams="file=u-boot.itb" --ondisk mmcblk --no-table --offset 384
 part /boot --source bootimg-partition --ondisk mmcblk --fstype=vfat --label boot --active --offset 8192 --size 64
