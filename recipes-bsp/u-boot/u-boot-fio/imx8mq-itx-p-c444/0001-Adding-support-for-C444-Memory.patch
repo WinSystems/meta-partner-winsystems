@@ -4887,7 +4887,7 @@ diff --git a/board/freescale/imx8mq_evk/spl.c b/board/freescale/imx8mq_evk/spl.c
 index bb8211dd7c..848db2eaef 100644
 --- a/board/freescale/imx8mq_evk/spl.c
 +++ b/board/freescale/imx8mq_evk/spl.c
-@@ -24,18 +24,28 @@
+@@ -30,18 +30,28 @@
  #include <power/pfuze100_pmic.h>
  #include <spl.h>
  #include "../common/pfuze.h"
@@ -4902,7 +4902,7 @@ index bb8211dd7c..848db2eaef 100644
  static void spl_dram_init(void)
  {
  	/* ddr init */
--	if ((get_cpu_rev() & 0xfff) == CHIP_REV_2_1)
+-	if (soc_rev() >= CHIP_REV_2_1)
 -		ddr_init(&dram_timing);
 -	else
 -		ddr_init(&dram_timing_b0);
@@ -4925,17 +4925,17 @@ diff --git a/include/configs/imx8mq_evk.h b/include/configs/imx8mq_evk.h
 index b6cd2dfead..db75aad0f6 100644
 --- a/include/configs/imx8mq_evk.h
 +++ b/include/configs/imx8mq_evk.h
-@@ -171,6 +171,10 @@
+@@ -191,6 +191,10 @@
+
  #define PHYS_SDRAM                      0x40000000
  #define PHYS_SDRAM_SIZE			0xC0000000 /* 3GB DDR */
- #define CONFIG_SYS_BOOTM_LEN		SZ_64M
 +#ifdef CONFIG_IMX8M_4G_LPDDR4
 +#define PHYS_SDRAM_2			0x100000000
 +#define PHYS_SDRAM_2_SIZE		0x40000000 /* 1GB DDR */
 +#endif
  
- #define CONFIG_SYS_MEMTEST_START	PHYS_SDRAM
- #define CONFIG_SYS_MEMTEST_END		(CONFIG_SYS_MEMTEST_START + \
+ #define CONFIG_MXC_UART_BASE		UART1_BASE_ADDR
+
 -- 
 2.25.1
 
