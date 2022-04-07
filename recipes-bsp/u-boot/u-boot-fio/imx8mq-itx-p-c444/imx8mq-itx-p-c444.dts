@@ -16,19 +16,21 @@
 		bootargs = "console=ttymxc0,115200 earlycon=ec_imx6q,0x30860000,115200";
 		stdout-path = &uart1;
 	};
-	/*
+
 	firmware {
 		optee {
 			compatible = "linaro,optee-tz";
 			method = "smc";
 		};
 	};
+
 	/*
 	memory@40000000 {
 		device_type = "memory";
 		reg = <0x00000000 0x40000000 0x1 0x00000000>;
 	};
 	*/
+
 	pcie0_refclk: pcie0-refclk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
@@ -93,10 +95,8 @@
 	phy-mode = "rgmii-id";
 	phy-handle = <&ethphy0>;
 	fsl,magic-packet;
-        phy-reset-gpios = <&gpio4 0 GPIO_ACTIVE_LOW>; 
-        phy-reset-duration = <10>;
 	status = "okay";
- 
+
 	mdio {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -104,6 +104,8 @@
 		ethphy0: ethernet-phy@3 {
 			compatible = "ethernet-phy-ieee802.3-c22";
 			reg = <3>;
+			reset-gpios = <&gpio4 0 GPIO_ACTIVE_LOW>;
+			reset-assert-us = <10000>;
 			at803x,eee-disabled;
 		};
 	};
@@ -233,7 +235,22 @@
 		 <&clk IMX8MQ_CLK_PCIE1_PHY>,
 		 <&pcie0_refclk>;
 	clock-names = "pcie", "pcie_aux", "pcie_phy", "pcie_bus";
+	assigned-clocks = <&clk IMX8MQ_CLK_PCIE1_AUX>,
+			  <&clk IMX8MQ_CLK_PCIE1_PHY>,
+			  <&clk IMX8MQ_CLK_PCIE1_CTRL>;
+	assigned-clock-rates = <10000000>, <100000000>, <250000000>;
+	assigned-clock-parents = <&clk IMX8MQ_SYS2_PLL_50M>,
+				 <&clk IMX8MQ_SYS2_PLL_100M>,
+				 <&clk IMX8MQ_SYS2_PLL_250M>;
+	resets = <&src IMX8MQ_RESET_PCIEPHY>,
+	         <&src IMX8MQ_RESET_PCIE_CTRL_APPS_EN>,
+		 <&src IMX8MQ_RESET_PCIE_CTRL_APPS_CLK_REQ>,
+		 <&src IMX8MQ_RESET_PCIE_CTRL_APPS_TURNOFF>;
+	reset-names = "pciephy", "apps", "clkreq", "turnoff";
+	linux,pci-domain = <0>;
 	hard-wired = <1>;
+	vph-supply = <&vgen5_reg>;
+	l1ss-disabled;
 	status = "okay";
 };
 
@@ -248,7 +265,7 @@
 
 &uart1 {
 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_uart1>, <&pinctrl_serial2_gpio>;
+	pinctrl-0 = <&pinctrl_uart1>, <&pinctrl_serial2_gpio>;
 	assigned-clocks = <&clk IMX8MQ_CLK_UART1>;
 	assigned-clock-parents = <&clk IMX8MQ_CLK_25M>;
  	uart-has-rtscts;
@@ -280,6 +297,8 @@
 };
 
 &usdhc1 {
+	assigned-clocks = <&clk IMX8MQ_CLK_USDHC1>;
+	assigned-clock-rates = <400000000>;
 	pinctrl-names = "default", "state_100mhz", "state_200mhz";
 	pinctrl-0 = <&pinctrl_usdhc1>;
 	pinctrl-1 = <&pinctrl_usdhc1_100mhz>;
@@ -289,19 +308,18 @@
 	non-removable;
 	no-sd;
 	no-sdio;
-	mmc-hs400-1_8v;
 	status = "okay";
 };
 
 &usdhc2 {
+	assigned-clocks = <&clk IMX8MQ_CLK_USDHC2>;
+	assigned-clock-rates = <200000000>;
 	pinctrl-names = "default", "state_100mhz", "state_200mhz";
 	pinctrl-0 = <&pinctrl_usdhc2>;
 	pinctrl-1 = <&pinctrl_usdhc2_100mhz>;
 	pinctrl-2 = <&pinctrl_usdhc2_200mhz>;
 	cd-gpios = <&gpio2 12 GPIO_ACTIVE_LOW>;
 	vmmc-supply = <&reg_usdhc2_vmmc>;
-	sd-uhs-sdr104;
-	sd-uhs-ddr50;
 	status = "okay";
 };
 
@@ -309,7 +327,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_wdog>;
 	fsl,ext-reset-output;
-	status = "okay";
+	status = "disabled";
 };
 
 &dcss {
@@ -340,7 +358,7 @@
 			vsync-len = <5>;
 		};
 	};
-	
+
 	port@0 {
 		hdmi_in: endpoint {
 			remote-endpoint = <&dcss_out>;
@@ -404,15 +422,15 @@
 
 	pinctrl_pcie0: pcie0grp {
 		fsl,pins = <
-				MX8MQ_IOMUXC_I2C4_SCL_GPIO5_IO20	0x16
-				MX8MQ_IOMUXC_UART4_TXD_GPIO5_IO29	0x16
-				MX8MQ_IOMUXC_UART4_RXD_GPIO5_IO28	0x16
+			MX8MQ_IOMUXC_I2C4_SCL_PCIE1_CLKREQ_B		0x76
+			MX8MQ_IOMUXC_UART4_TXD_GPIO5_IO29	0x16
+			MX8MQ_IOMUXC_UART4_RXD_GPIO5_IO28	0x16
 		>;
 	};
 
 	pinctrl_pcie1: pcie1grp {
 		fsl,pins = <
-			MX8MQ_IOMUXC_I2C4_SDA_GPIO5_IO21	0x16
+			MX8MQ_IOMUXC_I2C4_SDA_PCIE2_CLKREQ_B		0x76 /* open drain, pull up */
 			MX8MQ_IOMUXC_ECSPI2_SCLK_GPIO5_IO10	0x16
 			MX8MQ_IOMUXC_ECSPI2_MISO_GPIO5_IO12	0x16
 		>;
