@@ -1,0 +1,26 @@
+From 1ab2ebbd0e960ab2b62081b453e447f2fa13d88b Mon Sep 17 00:00:00 2001
+From: Michael Scott <mike@foundries.io>
+Date: Mon, 11 Apr 2022 20:51:25 -0700
+Subject: [PATCH] imx8mq-itx-p-c444: adjust ethernet phy
+
+Signed-off-by: Michael Scott <mike@foundries.io>
+---
+ include/configs/imx8mq_evk.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/configs/imx8mq_evk.h b/include/configs/imx8mq_evk.h
+index f4f18fb623..a5d0aeeb87 100644
+--- a/include/configs/imx8mq_evk.h
++++ b/include/configs/imx8mq_evk.h
+@@ -63,7 +63,7 @@
+ #define PHY_ANEG_TIMEOUT 20000
+ 
+ #define CONFIG_FEC_XCV_TYPE             RGMII
+-#define CONFIG_FEC_MXC_PHYADDR          0
++#define CONFIG_FEC_MXC_PHYADDR          3
+ 
+ #define IMX_FEC_BASE			0x30BE0000
+ #endif
+-- 
+2.35.1
+
