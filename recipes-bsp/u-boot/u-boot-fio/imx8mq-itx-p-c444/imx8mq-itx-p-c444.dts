@@ -285,11 +285,13 @@
 };
 
 &usb_dwc3_0 {
-	dr_mode = "otg";
+	dr_mode = "host";
 	hnp-disable;
 	srp-disable;
 	adp-disable;
 	usb-role-switch;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_usb_hub>;
 	snps,dis-u1-entry-quirk;
 	snps,dis-u2-entry-quirk;
 	status = "okay";
