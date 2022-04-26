@@ -213,6 +213,14 @@
 			};
 		};
 	};
+
+	usb_hub: usb2514bi@2c {
+		compatible = "microchip,usb2514bi";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_usb_hub>;
+		reset-gpios = <&gpio1 15 GPIO_ACTIVE_LOW>;
+		reg = <0x2c>;
+	};
 };
 
 
