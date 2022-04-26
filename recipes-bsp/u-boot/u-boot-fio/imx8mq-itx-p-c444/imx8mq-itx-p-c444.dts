@@ -565,4 +565,15 @@
 			MX8MQ_IOMUXC_GPIO1_IO02_WDOG1_WDOG_B		0xc6
 		>;
 	};
+
+        pinctrl_usb_hub: usbhubgrp {
+                fsl,pins = <
+                        /* USB3.0_PWR_EN */
+                        MX8MQ_IOMUXC_GPIO1_IO12_GPIO1_IO12      0x59
+                        /* USB_3.0_OC */
+                        MX8MQ_IOMUXC_GPIO1_IO13_GPIO1_IO13      0x16
+                        /* USB_HUB_EN */
+                        MX8MQ_IOMUXC_GPIO1_IO15_GPIO1_IO15      0x59
+                >;
+        };
 };
