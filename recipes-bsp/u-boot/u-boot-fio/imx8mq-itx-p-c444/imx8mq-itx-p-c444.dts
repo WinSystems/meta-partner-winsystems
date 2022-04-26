@@ -337,7 +337,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_wdog>;
 	fsl,ext-reset-output;
-	status = "disabled";
+	status = "okay";
 };
 
 &dcss {
