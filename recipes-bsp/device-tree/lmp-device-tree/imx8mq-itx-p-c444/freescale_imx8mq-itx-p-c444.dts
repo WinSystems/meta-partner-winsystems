@@ -84,36 +84,33 @@
         };
 
         sound-wm8960 {
-                compatible = "simple-audio-card";
-                simple-audio-card,name = "wm8960-audio";
-                simple-audio-card,format = "i2s";
-                simple-audio-card,frame-master = <&cpudai>;
-                simple-audio-card,bitclock-master = <&cpudai>;
-                simple-audio-card,widgets =
-                        "Line", "Line Out Jack",
-			"Line", "Line in Jack",
-			"Microphone", "Microphone Jack";
+                compatible = "fsl,imx-audio-wm8960";
+                audio-cpu = <&sai2>;
+                audio-codec = <&audio_codec>;
 
-                simple-audio-card,routing =
+                audio-routing =
                         "Line Out Jack", "HP_L",
                         "Line Out Jack", "HP_R",
-			"Line in Jack", "LINPUT3",
-			"Line in Jack", "RINPUT3",
-			"Microphone Jack", "LINPUT2",
-			"Microphone Jack", "RINPUT2";
+			"LINPUT3", "Line In Jack",
+			"RINPUT3", "Line In Jack",
+			"LINPUT2", "Mic Jack",
+			"RINPUT2", "Mic Jack";
 
-                cpudai: simple-audio-card,cpu {
-                        sound-dai = <&sai2>;
-                        dai-tdm-slot-num = <2>;
-                        dai-tdm-slot-width = <32>;
-                };
-
-                link_codec: simple-audio-card,codec {
-                        sound-dai = <&audio_codec>;
-                        clocks = <&clk IMX8MQ_CLK_SAI2_ROOT>;
-                };
+                model = "wm8960-audio";
         };
-
+	sound-hdmi {
+		compatible = "fsl,imx-audio-hdmi";
+		model = "imx-audio-hdmi";
+		audio-cpu = <&sai4>;
+		hdmi-out;
+		constraint-rate = <44100>,
+				<88200>,
+				<176400>,
+				<32000>,
+				<48000>,
+				<96000>,
+				<192000>;
+	};
 };
 
 
@@ -594,10 +591,11 @@ tpm_dev: &ecspi2 {
         };
 
         audio_codec: wm8960@1a {
+		compatible = "wlf,wm8960";
+		reg = <0x1a>;
+		clocks = <&clk IMX8MQ_CLK_SAI2_ROOT>;
+		clock-names = "mclk";
 		#sound-dai-cells = <0>;
-                compatible = "wlf,wm8960";
-                reg = <0x1a>;
-                wlf,shared-lrclk;
         };
 
         usb_hub: usb2514bi@2c {
