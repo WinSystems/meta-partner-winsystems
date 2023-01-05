@@ -1,0 +1,60 @@
+From e94eaaff76a7d019efff17d3c4e19158398b6b5f Mon Sep 17 00:00:00 2001
+From: Benjamin Herrera Navarro <bherreranavarro@winsystems.com>
+Date: Wed, 19 Oct 2022 18:50:18 +0000
+Subject: [PATCH 08/12] Configure target itx-p-c444
+
+---
+ arch/arm/Kconfig                    | 1 +
+ arch/arm/mach-imx/imx8m/Kconfig     | 9 +++++++++
+ configs/imx8mq_itx_p_c444_defconfig | 3 +--
+ 3 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index 5cef18b8f6..f91d23fe3b 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -2235,6 +2235,7 @@ source "board/freescale/ls1012aqds/Kconfig"
+ source "board/freescale/ls1012ardb/Kconfig"
+ source "board/freescale/ls1012afrdm/Kconfig"
+ source "board/freescale/lx2160a/Kconfig"
++source "board/freescale/imx8mq_itx_p_c444/Kconfig"
+ source "board/grinn/chiliboard/Kconfig"
+ source "board/hisilicon/hikey/Kconfig"
+ source "board/hisilicon/hikey960/Kconfig"
+diff --git a/arch/arm/mach-imx/imx8m/Kconfig b/arch/arm/mach-imx/imx8m/Kconfig
+index 456073873d..7ee9a366aa 100644
+--- a/arch/arm/mach-imx/imx8m/Kconfig
++++ b/arch/arm/mach-imx/imx8m/Kconfig
+@@ -73,6 +73,15 @@ config TARGET_IMX8MQ_EVK
+ 	select ARCH_MISC_INIT
+ 	select SPL_CRYPTO if SPL
+ 
++config TARGET_IMX8MQ_ITX_P_C444
++	bool "imx8mq_itx_p_c444"
++	select IMX8MQ
++	select IMX8M_LPDDR4
++	select FSL_CAAM
++	select FSL_BLOB
++	select ARCH_MISC_INIT
++	select SPL_CRYPTO if SPL
++
+ config TARGET_IMX8MQ_PHANBELL
+ 	bool "imx8mq_phanbell"
+ 	select BINMAN
+diff --git a/configs/imx8mq_itx_p_c444_defconfig b/configs/imx8mq_itx_p_c444_defconfig
+index 03bb0f24a7..c57210a89e 100644
+--- a/configs/imx8mq_itx_p_c444_defconfig
++++ b/configs/imx8mq_itx_p_c444_defconfig
+@@ -15,8 +15,7 @@ CONFIG_SYS_I2C_MXC_I2C2=y
+ CONFIG_SYS_I2C_MXC_I2C3=y
+ CONFIG_DM_GPIO=y
+ CONFIG_SPL_TEXT_BASE=0x7E1000
+-#CONFIG_USB_TCPC is not set
+-CONFIG_TARGET_IMX8MQ_EVK=y
++CONFIG_TARGET_IMX8MQ_ITX_P_C444=y
+ CONFIG_ARCH_MISC_INIT=y
+ CONFIG_SPL_MMC=y
+ CONFIG_SPL_SERIAL=y
+-- 
+2.25.1
+

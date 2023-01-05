@@ -1,0 +1,24 @@
+From bd4c0d782cad38da18029163015fd4bbaea45925 Mon Sep 17 00:00:00 2001
+From: Benjamin Herrera Navarro <bherreranavarro@winsystems.com>
+Date: Wed, 19 Oct 2022 18:58:39 +0000
+Subject: [PATCH 10/12] Fix define  warnings
+
+---
+ include/configs/imx8mq_itx_p_c444.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/include/configs/imx8mq_itx_p_c444.h b/include/configs/imx8mq_itx_p_c444.h
+index 383d22bbcb..b907455208 100644
+--- a/include/configs/imx8mq_itx_p_c444.h
++++ b/include/configs/imx8mq_itx_p_c444.h
+@@ -11,6 +11,7 @@
+ #include <asm/arch/imx-regs.h>
+ #include "imx_env.h"
+ 
++#undef CONFIG_NR_DRAM_BANKS
+ #define CONFIG_NR_DRAM_BANKS 8
+ 
+ #define CONFIG_SYS_BOOTM_LEN		(64 * SZ_1M)
+-- 
+2.25.1
+

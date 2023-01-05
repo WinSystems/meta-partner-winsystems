@@ -1,0 +1,25 @@
+From 8e614b76d9ce8cea37f99a3375b6273ab013a345 Mon Sep 17 00:00:00 2001
+From: Benjamin Herrera Navarro <bherreranavarro@winsystems.com>
+Date: Wed, 19 Oct 2022 19:07:00 +0000
+Subject: [PATCH 11/12] Chaging vendor to correct path issue in Yocto
+
+---
+ board/freescale/imx8mq_itx_p_c444/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/board/freescale/imx8mq_itx_p_c444/Kconfig b/board/freescale/imx8mq_itx_p_c444/Kconfig
+index bd7b356fae..ff88b059a8 100644
+--- a/board/freescale/imx8mq_itx_p_c444/Kconfig
++++ b/board/freescale/imx8mq_itx_p_c444/Kconfig
+@@ -4,7 +4,7 @@ config SYS_BOARD
+ 	default "imx8mq_itx_p_c444"
+ 
+ config SYS_VENDOR
+-	default "winsystems"
++	default "freescale"
+ 
+ config SYS_CONFIG_NAME
+ 	default "imx8mq_itx_p_c444"
+-- 
+2.25.1
+

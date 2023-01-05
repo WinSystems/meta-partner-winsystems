@@ -1,0 +1,59 @@
+From 868bc5434a5fe0fafb7e069f02ff5f36800e91ff Mon Sep 17 00:00:00 2001
+From: Benjamin Herrera Navarro <bherreranavarro@winsystems.com>
+Date: Wed, 19 Oct 2022 18:52:02 +0000
+Subject: [PATCH 09/12] Correct naming typo
+
+---
+ board/freescale/{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/Kconfig  | 0
+ .../{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/MAINTAINERS          | 0
+ board/freescale/{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/Makefile | 0
+ .../{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/imx8mq_itx_p_c444.c  | 0
+ .../{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/lpddr4_timing.c      | 0
+ .../{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/lpddr4_timing_2G.c   | 0
+ .../{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/lpddr4_timing_4G.c   | 0
+ board/freescale/{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/spl.c    | 0
+ 8 files changed, 0 insertions(+), 0 deletions(-)
+ rename board/freescale/{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/Kconfig (100%)
+ rename board/freescale/{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/MAINTAINERS (100%)
+ rename board/freescale/{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/Makefile (100%)
+ rename board/freescale/{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/imx8mq_itx_p_c444.c (100%)
+ rename board/freescale/{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/lpddr4_timing.c (100%)
+ rename board/freescale/{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/lpddr4_timing_2G.c (100%)
+ rename board/freescale/{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/lpddr4_timing_4G.c (100%)
+ rename board/freescale/{imx8mq_itx_q_c444 => imx8mq_itx_p_c444}/spl.c (100%)
+
+diff --git a/board/freescale/imx8mq_itx_q_c444/Kconfig b/board/freescale/imx8mq_itx_p_c444/Kconfig
+similarity index 100%
+rename from board/freescale/imx8mq_itx_q_c444/Kconfig
+rename to board/freescale/imx8mq_itx_p_c444/Kconfig
+diff --git a/board/freescale/imx8mq_itx_q_c444/MAINTAINERS b/board/freescale/imx8mq_itx_p_c444/MAINTAINERS
+similarity index 100%
+rename from board/freescale/imx8mq_itx_q_c444/MAINTAINERS
+rename to board/freescale/imx8mq_itx_p_c444/MAINTAINERS
+diff --git a/board/freescale/imx8mq_itx_q_c444/Makefile b/board/freescale/imx8mq_itx_p_c444/Makefile
+similarity index 100%
+rename from board/freescale/imx8mq_itx_q_c444/Makefile
+rename to board/freescale/imx8mq_itx_p_c444/Makefile
+diff --git a/board/freescale/imx8mq_itx_q_c444/imx8mq_itx_p_c444.c b/board/freescale/imx8mq_itx_p_c444/imx8mq_itx_p_c444.c
+similarity index 100%
+rename from board/freescale/imx8mq_itx_q_c444/imx8mq_itx_p_c444.c
+rename to board/freescale/imx8mq_itx_p_c444/imx8mq_itx_p_c444.c
+diff --git a/board/freescale/imx8mq_itx_q_c444/lpddr4_timing.c b/board/freescale/imx8mq_itx_p_c444/lpddr4_timing.c
+similarity index 100%
+rename from board/freescale/imx8mq_itx_q_c444/lpddr4_timing.c
+rename to board/freescale/imx8mq_itx_p_c444/lpddr4_timing.c
+diff --git a/board/freescale/imx8mq_itx_q_c444/lpddr4_timing_2G.c b/board/freescale/imx8mq_itx_p_c444/lpddr4_timing_2G.c
+similarity index 100%
+rename from board/freescale/imx8mq_itx_q_c444/lpddr4_timing_2G.c
+rename to board/freescale/imx8mq_itx_p_c444/lpddr4_timing_2G.c
+diff --git a/board/freescale/imx8mq_itx_q_c444/lpddr4_timing_4G.c b/board/freescale/imx8mq_itx_p_c444/lpddr4_timing_4G.c
+similarity index 100%
+rename from board/freescale/imx8mq_itx_q_c444/lpddr4_timing_4G.c
+rename to board/freescale/imx8mq_itx_p_c444/lpddr4_timing_4G.c
+diff --git a/board/freescale/imx8mq_itx_q_c444/spl.c b/board/freescale/imx8mq_itx_p_c444/spl.c
+similarity index 100%
+rename from board/freescale/imx8mq_itx_q_c444/spl.c
+rename to board/freescale/imx8mq_itx_p_c444/spl.c
+-- 
+2.25.1
+

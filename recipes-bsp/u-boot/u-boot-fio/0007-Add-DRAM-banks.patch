@@ -1,0 +1,25 @@
+From 80008da68ddbf7f204fc7b0a1db75d4157e9c15d Mon Sep 17 00:00:00 2001
+From: Benjamin Herrera Navarro <bherreranavarro@winsystems.com>
+Date: Wed, 19 Oct 2022 14:20:47 +0000
+Subject: [PATCH 07/12] Add DRAM banks
+
+---
+ include/configs/imx8mq_itx_p_c444.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/configs/imx8mq_itx_p_c444.h b/include/configs/imx8mq_itx_p_c444.h
+index 0c16d9e5f0..383d22bbcb 100644
+--- a/include/configs/imx8mq_itx_p_c444.h
++++ b/include/configs/imx8mq_itx_p_c444.h
+@@ -11,6 +11,8 @@
+ #include <asm/arch/imx-regs.h>
+ #include "imx_env.h"
+ 
++#define CONFIG_NR_DRAM_BANKS 8
++
+ #define CONFIG_SYS_BOOTM_LEN		(64 * SZ_1M)
+ 
+ #define CONFIG_SPL_MAX_SIZE		(152 * 1024)
+-- 
+2.25.1
+

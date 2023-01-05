@@ -1,0 +1,26 @@
+From 5220550680e2fb6aaaf44d254d249367dafb7947 Mon Sep 17 00:00:00 2001
+From: Benjamin Herrera Navarro <bherreranavarro@winsystems.com>
+Date: Wed, 19 Oct 2022 19:13:10 +0000
+Subject: [PATCH 12/12] Fix entern declarations
+
+---
+ board/freescale/imx8mq_itx_p_c444/spl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/board/freescale/imx8mq_itx_p_c444/spl.c b/board/freescale/imx8mq_itx_p_c444/spl.c
+index c0a25c5adf..aca1f5b2b3 100644
+--- a/board/freescale/imx8mq_itx_p_c444/spl.c
++++ b/board/freescale/imx8mq_itx_p_c444/spl.c
+@@ -36,7 +36,8 @@
+ 
+ DECLARE_GLOBAL_DATA_PTR;
+ 
+-extern struct dram_timing_info dram_timing_b0;
++extern struct dram_timing_info dram_timing_2G;
++extern struct dram_timing_info dram_timing_4G;
+ 
+ static void spl_dram_init(void)
+ {
+-- 
+2.25.1
+
