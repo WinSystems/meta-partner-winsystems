@@ -2,7 +2,6 @@
 
 SRC_URI:append:imx8mq-itx-p-c444 = " \
     file://imx8mq-itx-p-c444.cfg \
-    file://lmp-ebbr.cfg \
     file://imx8mq-itx-p-c444.dts \
     file://imx8mq-itx-p-c444-u-boot.dtsi \
     file://0001-Add-itx_p_c444-device-tree.patch \
