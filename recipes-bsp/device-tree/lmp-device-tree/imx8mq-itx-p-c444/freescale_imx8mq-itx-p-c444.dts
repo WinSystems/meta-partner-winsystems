@@ -15,7 +15,7 @@
 
 /dts-v1/;
 #include <dt-bindings/usb/pd.h>
-#include "imx8mq.dtsi"
+#include "imx8mq-itx-p-c444.dtsi"
 
 / {
         model = "Winsystem i.MX8MQ PICOITX";
@@ -64,11 +64,11 @@
 
 //	Uncomment if using mcp251x on spi
 	
-        can0_osc: can0_osc {
-                compatible = "fixed-clock";
-                #clock-cells = <0>;
-                clock-frequency  = <20000000>;
-        };
+        // can0_osc: can0_osc {
+        //         compatible = "fixed-clock";
+        //         #clock-cells = <0>;
+        //         clock-frequency  = <20000000>;
+        // };
 	
 
         reg_usdhc2_vmmc: usdhc2_vmmc {
@@ -457,29 +457,29 @@ enet_phy: &fec1 {
         };
 };
 
-spi: &ecspi1 {
-	#address-cells = <1>;
-	#size-cells = <0>;
-        fsl,spi-num-chipselects = <1>;
-	//cs-gpios = <&gpio5 9 GPIO_ACTIVE_HIGH>;
-        pinctrl-names = "default";
-        pinctrl-0 = <&pinctrl_ecspi1>;
-        status = "okay";
+// spi: &ecspi1 {
+// 	#address-cells = <1>;
+// 	#size-cells = <0>;
+//         fsl,spi-num-chipselects = <1>;
+// 	//cs-gpios = <&gpio5 9 GPIO_ACTIVE_HIGH>;
+//         pinctrl-names = "default";
+//         pinctrl-0 = <&pinctrl_ecspi1>;
+//         status = "okay";
 	
-        can0: can@0 {
-		#address-cells = <1>;
-                #size-cells = <1>;
-                reg = <0>;
-                compatible = "microchip,mcp25625";
-                spi-max-frequency = <100000>;
-                interrupt-parent = <&gpio4>;
-                interrupts = <28 0x2>;
-                clocks = <&can0_osc>;
-		status = "okay";
-        };
+//         can0: can@0 {
+// 		#address-cells = <1>;
+//                 #size-cells = <1>;
+//                 reg = <0>;
+//                 compatible = "microchip,mcp25625";
+//                 spi-max-frequency = <100000>;
+//                 interrupt-parent = <&gpio4>;
+//                 interrupts = <28 0x2>;
+//                 clocks = <&can0_osc>;
+// 		status = "okay";
+//         };
 	
 	
-};
+// };
 
 tpm_dev: &ecspi2 {
 	#address-cells = <1>;
@@ -636,7 +636,6 @@ tpm_dev: &ecspi2 {
                 clock-frequency = <23880000>;
                 pinctrl-names = "default";
                 pinctrl-0 = <&pinctrl_csi1_pwn>;
-		enable-gpios = <&gpio3 0 GPIO_ACTIVE_HIGH>;
                 reset-gpios = <&gpio3 25 GPIO_ACTIVE_LOW>;
 		status = "disabled";
                 port {
@@ -882,3 +881,4 @@ camera: &mipi_csi_1 {
 / {
         interrupt-parent = <&gic>;
 };
+

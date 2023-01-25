@@ -13,7 +13,7 @@
  */
 
 #include "freescale_imx8mq-itx-p-c444.dts"
-
+#define MIPI_DSI_ENABLE
 
 &irqsteer {
         status = "okay";
@@ -43,6 +43,17 @@
 	sound-hdmi {
 		status = "disabled";
 	};
+
+	panel {    
+		compatible = "innolux,g121x1-l03", "simple-panel";
+		status = "okay";
+
+		port {
+			panel_in_lvds: endpoint {
+				remote-endpoint = <&lvds_bridge_out>;
+			};
+		};
+	};
 };
 
 &lcdif {
@@ -51,8 +62,10 @@
 
 &dcss {
     status = "okay";
-//    disp-dev = "mipi_disp";
-
+	disp-dev = "mipi_disp";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	compatible = "nxp,imx8mq-dcss";
     clocks = <&clk IMX8MQ_CLK_DISP_APB_ROOT>,
          <&clk IMX8MQ_CLK_DISP_AXI_ROOT>,
          <&clk IMX8MQ_CLK_DISP_RTRM_ROOT>,
@@ -76,12 +89,17 @@
                    <400000000>,
                    <599999999>;
 
-    port@0 {
+    dcss_disp0: port@0 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0>;
         dcss_out: endpoint {
+			reg = <0>;
             remote-endpoint = <&mipi_dsi_in>;
         };
     };
 };
+
 
 &dphy {
 	status = "okay";
@@ -89,6 +107,7 @@
 
 &mipi_dsi {
 	status = "okay";
+	compatible = "fsl,imx8mq-nwl-dsi";
 	/*
 	assigned-clocks = <&clk IMX8MQ_CLK_DSI_PHY_REF>,
 		<&clk IMX8MQ_CLK_DSI_CORE>,
@@ -104,21 +123,28 @@
 	*/
 	
 	ports {
-	        #address-cells = <1>;
-	        #size-cells = <0>;
+		#address-cells = <1>;
+		#size-cells = <0>;
 	
-	        port@0 {
-	               reg = <0>;
-	               mipi_dsi_in: endpoint {
-	                        remote-endpoint = <&dcss_out>;
-	               };
-	        };
-	
+		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0>;
+			mipi_dsi_in: endpoint@1 {
+				reg = <1>;
+				remote-endpoint = <&dcss_out>;
+			};
+		};
 	
 		port@1 {
+			#address-cells = <1>;
+			#size-cells = <0>;
 			reg = <1>;
-			mipi_dsi_out: endpoint {
-				remote-endpoint = <&lvds_bridge_in>;
+			mipi_dsi_out: endpoint@0 {
+				reg = <0>;
+				data-lanes = <0 1 2 3>;
+				remote-endpoint = <&dsi_lvds_bridge_in>;
+				attach-bridge;
 			};
 		};
 	};
@@ -127,6 +153,13 @@
 
 
 &i2c3 {
+	// #address-cells = <1>;
+	// #size-cells = <0>;
+	// clock-frequency = <100000>;
+	// pinctrl-names = "default";
+	// pinctrl-0 = <&pinctrl_i2c3>;
+	
+	status = "okay";
 	dsi_lvds_bridge: sn65dsi83@2c {
 		compatible = "ti,sn65dsi83";
 		reg = <0x2c>;
@@ -140,25 +173,21 @@
 		pinctrl-0 = <&pinctrl_lvds_bridge_en>;
 		status = "okay";
 
-		display-timings {
-			native-mode = <&timing0>;
-			timing0: 1024x768_60Hz {
-				clock-frequency = <65000000>;
-				hactive = <1024>;
-				vactive = <768>;
-				hback-porch = <156>;
-				hfront-porch = <156>;
-				vback-porch = <16>;
-				vfront-porch = <16>;
-				hsync-len = <8>;
-				vsync-len = <6>;
-				de-active = <1>;
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port@0 {
+				reg = <0>;
+				dsi_lvds_bridge_in: endpoint@0 {
+					remote-endpoint = <&mipi_dsi_out>;
+					data-lanes = <1 2 3 4>;
+				};
 			};
-		};
-
-		port@0 {
-			lvds_bridge_in: endpoint {
-				remote-endpoint = <&mipi_dsi_out>;
+			port@2 {
+				reg = <2>;
+				lvds_bridge_out: endpoint@0 {
+					remote-endpoint = <&panel_in_lvds>;
+				};
 			};
 		};
 	};
@@ -171,26 +200,27 @@ lvds_backlight: &pwm1 {
 };
 
 &iomuxc {
-	pinctrl_backligth_pwm1: backligth_pwm1 {
-		fsl,pins = <
-			/* BCKLT_PWM_3V3 */
-			MX8MQ_IOMUXC_SPDIF_EXT_CLK_PWM1_OUT	0x16
-			/* BCKLT_EN_3V3 */
-			MX8MQ_IOMUXC_SPDIF_TX_GPIO5_IO3		0x59
-			/* 12V_EN */
-			MX8MQ_IOMUXC_NAND_CE1_B_GPIO3_IO2	0x59
-		>;
-	};
+		pinctrl_backligth_pwm1: backligth_pwm1 {
+			fsl,pins = <
+				/* BCKLT_PWM_3V3 */
+				MX8MQ_IOMUXC_SPDIF_EXT_CLK_PWM1_OUT	0x16
+				/* BCKLT_EN_3V3 */
+				MX8MQ_IOMUXC_SPDIF_TX_GPIO5_IO3		0x59
+				/* 12V_EN */
+				MX8MQ_IOMUXC_NAND_CE1_B_GPIO3_IO2	0x59
+			>;
+		};
 
-	/* Use the LVDS bridge EN Pin for the SN65DSI83 Reset */
-	pinctrl_lvds_bridge_en: lvds_bridge_en {
-		fsl,pins = <
-			/* LVDS_EN_1V8 */
-			MX8MQ_IOMUXC_SAI5_RXD2_GPIO3_IO23	0x16
-			/* LVDS_IRQ_1V8to3V3 */
-			MX8MQ_IOMUXC_SAI5_RXD3_GPIO3_IO24	0x16
-			/* SEL68_3V3 */
-			MX8MQ_IOMUXC_SAI5_RXD1_GPIO3_IO22	0x16
-		>;
-	};
+		/* Use the LVDS bridge EN Pin for the SN65DSI83 Reset */
+		pinctrl_lvds_bridge_en: lvds_bridge_en {
+			fsl,pins = <
+				/* LVDS_EN_1V8 */
+				MX8MQ_IOMUXC_SAI5_RXD2_GPIO3_IO23	0x16
+				/* LVDS_IRQ_1V8to3V3 */
+				MX8MQ_IOMUXC_SAI5_RXD3_GPIO3_IO24	0x16
+				/* SEL68_3V3 */
+				MX8MQ_IOMUXC_SAI5_RXD1_GPIO3_IO22	0x16
+			>;
+		};
+
 };
