@@ -4884,14 +4884,17 @@ index 0000000000..ed66e10a74
 +
 +
 diff --git a/board/freescale/imx8mq_evk/spl.c b/board/freescale/imx8mq_evk/spl.c
-index bb8211dd7c..848db2eaef 100644
+index 3632e53544..64e183e105 100644
 --- a/board/freescale/imx8mq_evk/spl.c
 +++ b/board/freescale/imx8mq_evk/spl.c
-@@ -30,18 +30,28 @@
+@@ -29,21 +29,31 @@
  #include <power/pfuze100_pmic.h>
  #include <spl.h>
  #include "../common/pfuze.h"
 +#include <fuse.h>
+ #include <asm/arch/imx8mq_sec_def.h>
+ #include <asm/arch/imx8m_csu.h>
+ #include <asm/arch/imx8m_rdc.h>
  
  DECLARE_GLOBAL_DATA_PTR;
  
@@ -4925,7 +4928,7 @@ diff --git a/include/configs/imx8mq_evk.h b/include/configs/imx8mq_evk.h
 index b6cd2dfead..db75aad0f6 100644
 --- a/include/configs/imx8mq_evk.h
 +++ b/include/configs/imx8mq_evk.h
-@@ -191,6 +191,10 @@
+@@ -177,6 +177,10 @@
  #define CONFIG_SYS_SDRAM_BASE           0x40000000
  #define PHYS_SDRAM                      0x40000000
  #define PHYS_SDRAM_SIZE			0xC0000000 /* 3GB DDR */
