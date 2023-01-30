@@ -1,4 +1,4 @@
-setenv fdt_file imx8mq-itx-p-c444.dtb
+if test -z "$fdt_file"; then setenv fdt_file imx8mq-itx-p-c444.dtb;fi
 echo "Using freescale_${fdt_file}"
 
 # Default boot type and device
