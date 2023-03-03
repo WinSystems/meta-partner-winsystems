@@ -708,6 +708,7 @@ multi_protocol_serial2: &uart1 {
 	rts-gpios = <&gpio5 26 GPIO_ACTIVE_LOW>;
         rs485-rts-active-low = <0>;
         rs485-rx-during-tx = <1>;
+	uart-has-rtscts;
 	status = "okay";
 };
 
@@ -720,6 +721,7 @@ multi_protocol_serial1: &uart2 {
 	rts-gpios = <&gpio5 28 GPIO_ACTIVE_LOW>;
         rs485-rts-active-low = <0>;
         rs485-rx-during-tx = <1>;
+	uart-has-rtscts;
         status = "okay";
 };
 
