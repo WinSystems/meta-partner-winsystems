@@ -35,6 +35,13 @@ CORE_IMAGE_BASE_INSTALL += " \
     ${@bb.utils.contains('LMP_DISABLE_GPLV3', '1', '', '${CORE_IMAGE_BASE_INSTALL_GPLV3}', d)} \
 "
 
+CORE_IMAGE_BASE_INSTALL += " \
+    alsa-utils \
+"
+EXTRA_USERS_PARAMS += "\
+usermod -a -G audio fio; \
+"
+
 IMAGE_CMD:wic:append:imx8mq-itx-p-c444 () {
        dd if="${DEPLOY_DIR_IMAGE}/sit-${MACHINE}.bin" seek=65 bs=512 conv=notrunc of="${IMGDEPLOYDIR}/${IMAGE_NAME}.rootfs.wic"
 }
