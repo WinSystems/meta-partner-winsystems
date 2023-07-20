@@ -11,6 +11,12 @@ require ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'recipes-samples/imag
 # Enable OP-TEE related recipes if provided by the image
 require ${@bb.utils.contains('MACHINE_FEATURES', 'optee', 'recipes-samples/images/lmp-feature-optee.inc', '', d)}
 
+# Enable Xenomai4 related recipes if provided by the image
+require ${@bb.utils.contains('MACHINE_FEATURES', 'xeno4', 'recipes-samples/images/lmp-feature-xeno4.inc', '', d)}
+
+# Enable jailhouse related recipes if provided by the machine
+require ${@bb.utils.contains('MACHINE_FEATURES', 'jailhouse', 'recipes-samples/images/lmp-feature-jailhouse.inc', '', d)}
+
 require recipes-samples/images/lmp-feature-softhsm.inc
 require recipes-samples/images/lmp-feature-wireguard.inc
 require recipes-samples/images/lmp-feature-docker.inc
@@ -30,12 +36,12 @@ CORE_IMAGE_BASE_INSTALL += " \
     networkmanager-nmcli \
     git \
     vim \
-    udev-rules-backlight \
     packagegroup-core-full-cmdline-extended \
     ${@bb.utils.contains('LMP_DISABLE_GPLV3', '1', '', '${CORE_IMAGE_BASE_INSTALL_GPLV3}', d)} \
 "
 
 CORE_IMAGE_BASE_INSTALL += " \
+    udev-rules-backlight \
     alsa-utils \
 "
 EXTRA_USERS_PARAMS += "\
