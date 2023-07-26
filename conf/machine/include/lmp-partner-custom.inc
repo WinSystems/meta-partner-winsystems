@@ -1,3 +1,4 @@
+
 # LMP partner specific customizations (either replace or extend options as defined by meta-lmp)
 
 # Use mmcblk1p2 as root (SD card)
@@ -15,3 +16,5 @@ WKS_FILE:sota:imx8mq-itx-p-c444_imx8mq-itx-p-c444-ebbr = "efidisk-sota.wks"
 # Use imx-boot + u-boot.itb WIC file
 WKS_FILE:imx8mq-itx-p-c444 ?= "sdimage-imx8m-spl-fit.wks.in"
 WKS_FILE:sota:imx8mq-itx-p-c444 ?= "sdimage-imx8m-spl-fit-sota.wks.in"
+
+MACHINE_EXTRA_RRECOMMENDS:remove = "bluetooth-attach"
