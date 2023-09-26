@@ -1,0 +1,42 @@
+diff --git a/board/freescale/imx8mq_evk/imx8mq_evk.c b/board/freescale/imx8mq_evk/imx8mq_evk.c
+index 81a961883f..dd986ab8f7 100644
+--- a/board/freescale/imx8mq_evk/imx8mq_evk.c
++++ b/board/freescale/imx8mq_evk/imx8mq_evk.c
+@@ -27,6 +27,7 @@
+ #include <power/pfuze100_pmic.h>
+ #include "../common/tcpc.h"
+ #include "../common/pfuze.h"
++#include <fuse.h>
+ #include <usb.h>
+ #include <dwc3-uboot.h>
+ 
+@@ -45,6 +46,29 @@ static iomux_v3_cfg_t const uart_pads[] = {
+        IMX8MQ_PAD_UART1_TXD__UART1_TX | MUX_PAD_CTRL(UART_PAD_CTRL),
+ };
+ 
++
++int board_phys_sdram_size(phys_size_t *size)
++{
++       if (!size)
++               return -EINVAL;
++
++       unsigned int val;
++       fuse_read(9, 2, &val);
++       /* ddr init */
++       if (val && 0x1)
++       {
++               //Setup 2GB Memory size
++               *size = 0x80000000;
++       }
++       else
++       {
++               //Setup 4GB Memory Size
++               *size = 0x100000000;
++       }
++
++       return 0;
++}
++
+ int board_early_init_f(void)
+ {
+        struct wdog_regs *wdog = (struct wdog_regs *)WDOG1_BASE_ADDR;
