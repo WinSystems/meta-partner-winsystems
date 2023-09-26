@@ -8,6 +8,7 @@ SRC_URI:append:imx8mq-itx-p-c444 = " \
     file://0001-Adding-DTS-to-Makefile-for-C444.patch \
     file://0001-imx8mq-itx-p-c444-adjust-ethernet-phy.patch \
     file://0002-Memory-Size-Fix.patch \
+    file://0003-Fix-3GB-Define.patch \
 "
 
 SRC_URI:append:imx8mq-itx-p-c444-ebbr = " \
