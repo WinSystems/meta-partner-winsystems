@@ -1,0 +1,50 @@
+From b4ac383720c90d8229fe99fc40f9fd7c100ad0d4 Mon Sep 17 00:00:00 2001
+From: TJ Smith <tjsmith@winsystems.com>
+Date: Wed, 27 Sep 2023 20:30:47 +0000
+Subject: [PATCH] Ram size fix, read size from fuse
+
+---
+ board/freescale/imx8mq_evk/imx8mq_evk.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/board/freescale/imx8mq_evk/imx8mq_evk.c b/board/freescale/imx8mq_evk/imx8mq_evk.c
+index f470e6c7f50..bd456366b53 100644
+--- a/board/freescale/imx8mq_evk/imx8mq_evk.c
++++ b/board/freescale/imx8mq_evk/imx8mq_evk.c
+@@ -28,6 +28,7 @@
+ #include <power/pfuze100_pmic.h>
+ #include "../common/tcpc.h"
+ #include "../common/pfuze.h"
++#include <fuse.h>
+ #include <usb.h>
+ #include <dwc3-uboot.h>
+ 
+@@ -41,6 +42,28 @@ static iomux_v3_cfg_t const wdog_pads[] = {
+ 	IMX8MQ_PAD_GPIO1_IO02__WDOG1_WDOG_B | MUX_PAD_CTRL(WDOG_PAD_CTRL),
+ };
+ 
++int board_phys_sdram_size(phys_size_t *size)
++{
++       if (!size)
++               return -EINVAL;
++
++       unsigned int val;
++       fuse_read(9, 2, &val); /* WinSystems ITX-P-C444 sets ram size in a fuse */
++       /* ddr init */
++       if (val && 0x1)
++       {
++               //Setup 2GB Memory size
++               *size = 0x80000000;
++       }
++       else
++       {
++               //Setup 4GB Memory Size
++               *size = 0x100000000;
++       }
++
++       return 0;
++}
++
+ static iomux_v3_cfg_t const uart_pads[] = {
+ 	IMX8MQ_PAD_UART1_RXD__UART1_RX | MUX_PAD_CTRL(UART_PAD_CTRL),
+ 	IMX8MQ_PAD_UART1_TXD__UART1_TX | MUX_PAD_CTRL(UART_PAD_CTRL),

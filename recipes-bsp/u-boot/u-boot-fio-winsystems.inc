@@ -9,10 +9,13 @@ SRC_URI:append:imx8mq-itx-p-c444 = " \
     file://0001-imx8mq-itx-p-c444-adjust-ethernet-phy.patch \
 "
 
-SRC_URI:append:imx8mq-itx-p-c444-ebbr = " \
-    file://0001-LF-3892-5-imx8mn_evk-update-defconfig-and-code-for-S.patch \
-    file://0002-LF-4200-imx8m-soc-drop-phy-reset-gpios-for-fec.patch \
-"
+# TJS REMOVED FOR DEBUG
+# SRC_URI:append:imx8mq-itx-p-c444-ebbr = " \
+#     file://0001-LF-3892-5-imx8mn_evk-update-defconfig-and-code-for-S.patch \
+#     file://0002-LF-4200-imx8m-soc-drop-phy-reset-gpios-for-fec.patch \
+# "
+# 
+
 
 S = "${WORKDIR}/git"
 
